@@ -65,7 +65,7 @@ export default function ProductMarquee() {
   const items = products;
 
   return (
-    <div className="w-full overflow-hidden border-y border-separator bg-background fixed top-28">
+    <div className="w-full overflow-hidden border-y border-separator bg-background fixed md:top-28 top-23 py-3 md:py-0">
       <style>{`
         @keyframes bazardor-marquee {
           from { transform: translate3d(0, 0, 0); }
@@ -88,7 +88,7 @@ export default function ProductMarquee() {
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />
 
-      <div className="bazardor-marquee-track py-3">
+      <div className="bazardor-marquee-track md:py-3">
         <div className="flex shrink-0 items-center">
           {items.map((p) => (
             <Item key={`a-${p.id}`} p={p} />

@@ -7,10 +7,10 @@ import Link from "next/link";
 
 // Bengali date/time formatter
 const bnDateFormatter = new Intl.DateTimeFormat("bn-BD", {
-  weekday: "long", // বার
-  day: "numeric",  // তারিখ
-  month: "long",   // মাস
-  year: "numeric", // বছর
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
 });
 
 const bnTimeFormatter = new Intl.DateTimeFormat("bn-BD", {
@@ -28,7 +28,7 @@ export default function TopNavbar() {
 
   useEffect(() => {
     setNow(new Date());
-    const timer = setInterval(() => setNow(new Date()), 1000);
+    const timer = setInterval(() => setNow(new Date()), 36000);
     return () => clearInterval(timer);
   }, []);
 
@@ -45,20 +45,17 @@ export default function TopNavbar() {
 
   const user = session?.user;
 
-  // Build Bengali date-time string, e.g. "সোমবার, ১২ মে, ২০২৫ ০৩:৪৫:০৭ PM"
-  const bengaliDateTime = now
-    ? `${bnDateFormatter.format(now)}`
-    : "\u00A0";
+  const bengaliDateTime = now ? bnDateFormatter.format(now) : "\u00A0";
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 w-full bg-background/70 backdrop-blur-lg ">
+    <nav className="fixed inset-x-0 top-0 z-50 w-full bg-background/70 backdrop-blur-lg">
       <header className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
-        {/* Left: logo + brand + live time */}
+        {/* Left: logo + brand + live date */}
         <Link href="/" className="flex items-center gap-3 font-bold text-foreground">
           <div className="grid h-8 w-8 place-items-center rounded-lg bg-[#043117]">
             <Image
               src="/logo-icon.png"
-              alt="Bazar Dor"
+              alt="বাজার দর"
               width={20}
               height={20}
               className="h-5 w-5 object-contain"
@@ -122,7 +119,7 @@ export default function TopNavbar() {
                     onClick={() => setMenuOpen(false)}
                     className="block px-4 py-2 text-sm text-foreground hover:bg-default-100"
                   >
-                    Settings
+                    সেটিংস
                   </Link>
                   <button
                     type="button"
@@ -132,7 +129,7 @@ export default function TopNavbar() {
                     }}
                     className="block w-full cursor-pointer px-4 py-2 text-left text-sm text-danger hover:bg-danger-50"
                   >
-                    Sign Out
+                    লগ আউট
                   </button>
                 </div>
               )}
@@ -140,9 +137,11 @@ export default function TopNavbar() {
           ) : (
             <>
               <Link href="/sign-in" className="text-sm font-medium">
-                Login
+                লগ ইন
               </Link>
-              <Link href="/sign-up">Sign Up</Link>
+              <Link href="/sign-up" className="text-sm font-medium">
+                সাইন আপ
+              </Link>
             </>
           )}
         </div>
