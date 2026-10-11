@@ -5,6 +5,21 @@ import Image from "next/image";
 import { signOut, useSession } from "@/lib/auth-client";
 import Link from "next/link";
 
+// Bengali date/time formatter
+const bnDateFormatter = new Intl.DateTimeFormat("bn-BD", {
+  weekday: "long", // বার
+  day: "numeric",  // তারিখ
+  month: "long",   // মাস
+  year: "numeric", // বছর
+});
+
+const bnTimeFormatter = new Intl.DateTimeFormat("bn-BD", {
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: true,
+});
+
 export default function TopNavbar() {
   const { data: session, isPending } = useSession();
   const [now, setNow] = useState<Date | null>(null);
@@ -30,6 +45,11 @@ export default function TopNavbar() {
 
   const user = session?.user;
 
+  // Build Bengali date-time string, e.g. "সোমবার, ১২ মে, ২০২৫ ০৩:৪৫:০৭ PM"
+  const bengaliDateTime = now
+    ? `${bnDateFormatter.format(now)}`
+    : "\u00A0";
+
   return (
     <nav className="fixed inset-x-0 top-0 z-50 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
       <header className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
@@ -47,7 +67,7 @@ export default function TopNavbar() {
           <div className="flex flex-col leading-tight">
             <span className="text-lg font-bold">বাজার দর</span>
             <span className="text-xs font-normal text-default-500 tabular-nums">
-              {now ? now.toLocaleString() : "\u00A0"}
+              {bengaliDateTime}
             </span>
           </div>
         </Link>
@@ -63,7 +83,6 @@ export default function TopNavbar() {
                 onClick={() => setMenuOpen((v) => !v)}
                 className="flex cursor-pointer items-center gap-2 rounded-full py-1 pl-1 pr-2 outline-none transition hover:bg-default-100 focus-visible:ring-2 focus-visible:ring-primary"
               >
-                {/* Fixed user icon avatar */}
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-primary-foreground">
                   <svg
                     className="h-5 w-5"
@@ -123,9 +142,7 @@ export default function TopNavbar() {
               <Link href="/sign-in" className="text-sm font-medium">
                 Login
               </Link>
-              <Link  href="/sign-up">
-                Sign Up
-              </Link>
+              <Link href="/sign-up">Sign Up</Link>
             </>
           )}
         </div>
