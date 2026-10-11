@@ -51,7 +51,7 @@ export default function TopNavbar() {
     : "\u00A0";
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
+    <nav className="fixed inset-x-0 top-0 z-50 w-full bg-background/70 backdrop-blur-lg ">
       <header className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         {/* Left: logo + brand + live time */}
         <Link href="/" className="flex items-center gap-3 font-bold text-foreground">

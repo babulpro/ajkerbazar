@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import TopNavbar from "@/components/navbar/topNavbar";
+import { getCategories } from "@/lib/bazardor";
+import { CategoryProvider } from "@/context/CategoryContext";
+import Category from "@/components/Category";
 
 
 const geistSans = Geist({
@@ -19,20 +22,28 @@ export const metadata: Metadata = {
   description: "Daily Bazr Dor is a platform for daily deals and offers. Find the best discounts and promotions on a wide range of products and services.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+ 
+  const categories = await getCategories(); // Fetch categories from the API
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header>
+       <CategoryProvider categories={categories}>
+         <header>
           
           <TopNavbar/>
+          <Category/>
+          
         </header>
-        <main className="pt-16">
+        <main className="pt-24">
+          
           {children}  
         </main>
+       </CategoryProvider>
         
         </body>
     </html>
