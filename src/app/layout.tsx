@@ -5,6 +5,7 @@ import TopNavbar from "@/components/navbar/topNavbar";
 import { getCategories } from "@/lib/bazardor";
 import { CategoryProvider } from "@/context/CategoryContext";
 import Category from "@/components/Category";
+import ProductMarquee from "@/components/ProductMarquee";
 
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           
           <TopNavbar/>
           <Category/>
+          <ProductMarquee/>
           
         </header>
         <main className="pt-24">
