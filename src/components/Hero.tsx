@@ -32,7 +32,7 @@ export default async function Hero() {
 
         
             <Link
-              href="/products"
+              href="/"
               className="mt-6 inline-flex items-center justify-center rounded-lg border-2 border-green-600 px-5 py-2.5 text-sm font-semibold text-green-700 transition hover:bg-green-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
             >
               বাজার দেখুন
