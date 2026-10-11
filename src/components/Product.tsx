@@ -1,15 +1,12 @@
 import Link from "next/link";
-import {UNIT_BN, type Product } from "@/lib/product";
-import { getProducts } from "@/lib/product";
-
-const bnDate = new Intl.DateTimeFormat("bn-BD", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
+import { UNIT_BN, getProducts, type Product as ProductType } from "@/lib/product";
+import { getBengaliShortDate } from "@/lib/date";
 
 export default async function Product() {
-  const products = await getProducts();
+  const [products, updatedAt] = await Promise.all([
+    getProducts(),
+    getBengaliShortDate(),
+  ]);
 
   const rising = products.filter((p) => p.change.dir === "up");
   const falling = products.filter((p) => p.change.dir === "down");
@@ -17,11 +14,21 @@ export default async function Product() {
   return (
     <section className="mx-auto w-full max-w-5xl space-y-10 px-6">
       {rising.length > 0 && (
-        <Group title="আজ দাম বাড়ছে" accent="up" products={rising} />
+        <Group
+          title="আজ দাম বাড়ছে"
+          accent="up"
+          products={rising}
+          updatedAt={updatedAt}
+        />
       )}
 
       {falling.length > 0 && (
-        <Group title="আজ দাম কমেছে" accent="down" products={falling} />
+        <Group
+          title="আজ দাম কমেছে"
+          accent="down"
+          products={falling}
+          updatedAt={updatedAt}
+        />
       )}
 
       <Group
@@ -29,23 +36,26 @@ export default async function Product() {
         subtitle="প্রতিটি পণ্যের সর্বশেষ বাজারদর"
         accent="neutral"
         products={products}
+        updatedAt={updatedAt}
       />
     </section>
   );
 }
 
-/* ---------- Group ---------- */
+ 
 
 function Group({
   title,
   subtitle,
   accent,
   products,
+  updatedAt,
 }: {
   title: string;
   subtitle?: string;
   accent: "up" | "down" | "neutral";
-  products: Product[];
+  products: ProductType[];
+  updatedAt: string;
 }) {
   const accentColor =
     accent === "up"
@@ -70,7 +80,7 @@ function Group({
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
-          <ProductCard key={p.id} p={p} />
+          <ProductCard key={p.id} p={p} updatedAt={updatedAt} />
         ))}
       </div>
     </div>
@@ -79,7 +89,13 @@ function Group({
 
 /* ---------- Card ---------- */
 
-function ProductCard({ p }: { p: Product }) {
+function ProductCard({
+  p,
+  updatedAt,
+}: {
+  p: ProductType;
+  updatedAt: string;
+}) {
   const { dir, pct } = p.change;
 
   const arrow = dir === "up" ? "▲" : dir === "down" ? "▼" : "—";
@@ -91,7 +107,6 @@ function ProductCard({ p }: { p: Product }) {
       : "text-default-500";
 
   const unitBn = UNIT_BN[p.unit] ?? p.unit;
-  const updatedAt = bnDate.format(new Date());
 
   return (
     <Link
