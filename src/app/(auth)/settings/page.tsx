@@ -73,7 +73,7 @@ export default function SettingsPage() {
 
         {/* Sign out */}
         <Button
-          variant="bordered"
+           
           className="shrink-0 rounded-lg border-red-300 text-red-600 hover:bg-red-50"
           onPress={() => signOut()}
         >

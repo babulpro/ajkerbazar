@@ -6,6 +6,8 @@ import { getCategories } from "@/lib/bazardor";
 import { CategoryProvider } from "@/context/CategoryContext";
 import Category from "@/components/Category";
 import ProductMarquee from "@/components/ProductMarquee";
+import { getCategoriesCached } from "@/lib/category";
+ 
 
 
 const geistSans = Geist({
