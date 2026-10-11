@@ -45,7 +45,7 @@ export default function TopNavbar() {
             />
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-lg font-bold">Bazar Dor</span>
+            <span className="text-lg font-bold">বাজার দর</span>
             <span className="text-xs font-normal text-default-500 tabular-nums">
               {now ? now.toLocaleString() : "\u00A0"}
             </span>
