@@ -31,7 +31,7 @@ export default function SignInPage() {
   const singUPGoogleHandler= async()=>{
     const data= await signIn.social({
         provider:"google",
-        callbackURL:"/"
+        callbackURL:"https://ajkerbazar.vercel.app/api/auth/callback/google"
     })
 
      
@@ -39,9 +39,9 @@ export default function SignInPage() {
   const singUpGitHubHandler= async()=>{
     const data= await signIn.social({
         provider:"github", 
+        callbackURL:"https://ajkerbazar.vercel.app/api/auth/callback/github"
     })
-
-    console.log(data)
+ 
      
   }
 
